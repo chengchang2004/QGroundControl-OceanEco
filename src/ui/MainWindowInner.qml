@@ -337,7 +337,10 @@ Item {
 
     FlightDisplayView {
         id:                 flightView
-        anchors.fill:       parent
+        anchors.top:        planToolBar.bottom
+        anchors.bottom:     parent.bottom
+        anchors.left:       parent.left
+        anchors.right:      parent.right
         visible:            true
     }
 
