@@ -44,5 +44,12 @@
     "enumStrings":      "Hide,Show",
     "enumValues":       "1,0",
     "defaultValue":     0
+},
+{
+    "name":             "VideoTextOverlay",
+    "shortDescription": "Video Text Overlay",
+    "longDescription":  "Text to be overlaid on video stream and recorded video.",
+    "type":             "string",
+    "defaultValue":     ""
 }
 ]

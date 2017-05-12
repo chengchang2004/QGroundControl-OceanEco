@@ -82,6 +82,7 @@ private:
     {
         GstPad*         teepad;
         GstElement*     queue;
+        GstElement*     encoder;
         GstElement*     mux;
         GstElement*     filesink;
         gboolean        removing;
@@ -94,12 +95,14 @@ private:
     bool                _stopping;
     Sink*               _sink;
     GstElement*         _tee;
+    GstElement*         _text;
 
     static gboolean             _onBusMessage(GstBus* bus, GstMessage* message, gpointer user_data);
     static GstPadProbeReturn    _unlinkCallBack(GstPad* pad, GstPadProbeInfo* info, gpointer user_data);
     void                        _detachRecordingBranch(GstPadProbeInfo* info);
     void                        _shutdownRecordingBranch();
     void                        _shutdownPipeline();
+    void setText(QVariant text);
 
 #endif
 

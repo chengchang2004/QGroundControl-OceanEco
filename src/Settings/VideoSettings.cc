@@ -25,6 +25,7 @@ const char* VideoSettings::rtspUrlName =            "VideoRTSPUrl";
 const char* VideoSettings::videoSavePathName =      "VideoSavePath";
 const char* VideoSettings::videoAspectRatioName =   "VideoAspectRatio";
 const char* VideoSettings::videoGridLinesName =     "VideoGridLines";
+const char* VideoSettings::textOverlayName=         "VideoTextOverlay";
 
 const char* VideoSettings::videoSourceNoVideo = "No Video Available";
 const char* VideoSettings::videoSourceUDP =     "UDP Video Stream";
@@ -38,6 +39,7 @@ VideoSettings::VideoSettings(QObject* parent)
     , _videoSavePathFact(NULL)
     , _videoAspectRatioFact(NULL)
     , _gridLinesFact(NULL)
+    , _textOverlayFact(NULL)
 {
     QQmlEngine::setObjectOwnership(this, QQmlEngine::CppOwnership);
     qmlRegisterUncreatableType<VideoSettings>("QGroundControl.SettingsManager", 1, 0, "VideoSettings", "Reference only");
@@ -125,4 +127,13 @@ Fact* VideoSettings::gridLines(void)
     }
 
     return _gridLinesFact;
+}
+
+Fact* VideoSettings::textOverlay(void)
+{
+    if (!_textOverlayFact) {
+        _textOverlayFact = _createSettingsFact(textOverlayName);
+    }
+
+    return _textOverlayFact;
 }

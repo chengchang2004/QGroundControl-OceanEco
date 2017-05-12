@@ -40,6 +40,7 @@ QGCView {
     property Fact _videoPath:                   QGroundControl.settingsManager.videoSettings.videoSavePath
     property Fact _mapProvider:                 QGroundControl.settingsManager.flightMapSettings.mapProvider
     property Fact _mapType:                     QGroundControl.settingsManager.flightMapSettings.mapType
+    property Fact _videoTextOverlay:            QGroundControl.settingsManager.videoSettings.textOverlay
 
     readonly property string _requiresRestart:  qsTr("(Requires Restart)")
 
@@ -611,6 +612,24 @@ QGCView {
                                     onAcceptedForLoad: {
                                         _videoPath.value = file
                                     }
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing:    ScreenTools.defaultFontPixelWidth
+                            QGCLabel {
+                                anchors.verticalCenter:   videoTextArea.verticalCenter
+                                text:               qsTr("Overlay Text:")
+                                width:              _labelWidth
+                            }
+                            TextArea {
+                                id:                 videoTextArea
+                                width:              _editFieldWidth
+                                height: ScreenTools.defaultFontPixelHeight * 2.5
+                                text: _videoTextOverlay.value
+                                onEditingFinished: {
+                                    _videoTextOverlay.value = text
                                 }
                             }
                         }

@@ -25,6 +25,7 @@ public:
     Q_PROPERTY(Fact* videoSavePath  READ videoSavePath  CONSTANT)
     Q_PROPERTY(Fact* aspectRatio    READ aspectRatio    CONSTANT)
     Q_PROPERTY(Fact* gridLines      READ gridLines      CONSTANT)
+    Q_PROPERTY(Fact* textOverlay    READ textOverlay    CONSTANT)
 
     Fact* videoSource   (void);
     Fact* udpPort       (void);
@@ -32,6 +33,7 @@ public:
     Fact* videoSavePath (void);
     Fact* aspectRatio   (void);
     Fact* gridLines     (void);
+    Fact* textOverlay   (void);
 
     static const char* videoSettingsGroupName;
 
@@ -41,6 +43,7 @@ public:
     static const char* videoSavePathName;
     static const char* videoAspectRatioName;
     static const char* videoGridLinesName;
+    static const char* textOverlayName;
 
     static const char* videoSourceNoVideo;
     static const char* videoSourceUDP;
@@ -53,6 +56,7 @@ private:
     SettingsFact* _videoSavePathFact;
     SettingsFact* _videoAspectRatioFact;
     SettingsFact* _gridLinesFact;
+    SettingsFact* _textOverlayFact;
 };
 
 #endif
