@@ -60,14 +60,13 @@ artifacts:
 deploy:
 # deploy continuous builds to s3
   - provider: S3
-    access_key_id:
-      secure: IGAojLMqokL+76DbdulmWDA3MTsxEBBi3ReVVSqTy9c=
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: RiYqaR+3T2PMNz2j5ur8LCA6H/Zfd4jTX33CZE5iBxm+zaz4QLs25p0B7prpaoNN
-    bucket: qgroundcontrol
-    region: us-west-2
+      secure: H+6JLuM6RmVdlzvYZ92+E1+NB/Z4580IDd8m2wNCbSpFhzSewGtVk3M2AkjKTlCG
+    bucket: downloads.bluerobotics.com
+    region: us-east-1
     set_public: true
-    folder: builds/$(APPVEYOR_REPO_BRANCH)
+    folder: QGC/builds/$(APPVEYOR_REPO_BRANCH)
     artifact: qgcinstaller
     on:
       CONFIG: installer
@@ -75,14 +74,13 @@ deploy:
 
 # deploy daily build symbols to s3
   - provider: S3
-    access_key_id:
-      secure: IGAojLMqokL+76DbdulmWDA3MTsxEBBi3ReVVSqTy9c=
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: RiYqaR+3T2PMNz2j5ur8LCA6H/Zfd4jTX33CZE5iBxm+zaz4QLs25p0B7prpaoNN
-    bucket: qgroundcontrol
-    region: us-west-2
+      secure: H+6JLuM6RmVdlzvYZ92+E1+NB/Z4580IDd8m2wNCbSpFhzSewGtVk3M2AkjKTlCG
+    bucket: downloads.bluerobotics.com
+    region: us-east-1
     set_public: true
-    folder: cisyms
+    folder: QGC/cisyms
     artifact: symbols
     on:
       CONFIG: installer
@@ -90,14 +88,13 @@ deploy:
 
 # deploy release symbols to s3
   - provider: S3
-    access_key_id:
-      secure: IGAojLMqokL+76DbdulmWDA3MTsxEBBi3ReVVSqTy9c=
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: RiYqaR+3T2PMNz2j5ur8LCA6H/Zfd4jTX33CZE5iBxm+zaz4QLs25p0B7prpaoNN
-    bucket: qgroundcontrol
-    region: us-west-2
+      secure: H+6JLuM6RmVdlzvYZ92+E1+NB/Z4580IDd8m2wNCbSpFhzSewGtVk3M2AkjKTlCG
+    bucket: downloads.bluerobotics.com
+    region: us-east-1
     set_public: true
-    folder: releasesyms
+    folder: QGC/releasesyms
     artifact: symbols
     on:
       CONFIG: installer
@@ -106,7 +103,7 @@ deploy:
 # deploy tagged releases to Github releases
   - provider: GitHub
     auth_token:
-      secure: dzWLqd0eTKjrAWC5LgqVnwLemmrNdddGA2ZZn/OthAP37mwCLkP2C1zil7ivmEE8
+      secure: VEF0yQnbTywsc88aRTZH8e1/Z0M7qf2txtidiB43qrSFTvrE/2nAQzGx+eqCBb9p
     artifact: qgcinstaller
     draft: false
     prerelease: false
@@ -116,14 +113,13 @@ deploy:
 
 # deploy tagged releases to s3 version folder
   - provider: S3
-    access_key_id:
-      secure: IGAojLMqokL+76DbdulmWDA3MTsxEBBi3ReVVSqTy9c=
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: RiYqaR+3T2PMNz2j5ur8LCA6H/Zfd4jTX33CZE5iBxm+zaz4QLs25p0B7prpaoNN
-    bucket: qgroundcontrol
-    region: us-west-2
+      secure: H+6JLuM6RmVdlzvYZ92+E1+NB/Z4580IDd8m2wNCbSpFhzSewGtVk3M2AkjKTlCG
+    bucket: downloads.bluerobotics.com
+    region: us-east-1
     set_public: true
-    folder: $(APPVEYOR_REPO_TAG_NAME)
+    folder: QGC/$(APPVEYOR_REPO_TAG_NAME)
     artifact: qgcinstaller
     on:
       CONFIG: installer
@@ -131,15 +127,15 @@ deploy:
 
 # deploy tagged releases to s3 latest folder
   - provider: S3
-    access_key_id:
-      secure: IGAojLMqokL+76DbdulmWDA3MTsxEBBi3ReVVSqTy9c=
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: RiYqaR+3T2PMNz2j5ur8LCA6H/Zfd4jTX33CZE5iBxm+zaz4QLs25p0B7prpaoNN
-    bucket: qgroundcontrol
-    region: us-west-2
+      secure: H+6JLuM6RmVdlzvYZ92+E1+NB/Z4580IDd8m2wNCbSpFhzSewGtVk3M2AkjKTlCG
+    bucket: downloads.bluerobotics.com
+    region: us-east-1
     set_public: true
-    folder: latest
+    folder: QGC/latest
     artifact: qgcinstaller
     on:
       CONFIG: installer
       appveyor_repo_tag: true
+

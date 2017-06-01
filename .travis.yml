@@ -204,14 +204,14 @@ before_deploy:
 deploy:
   # deploy installers to s3 builds/ if on a branch
   - provider: s3
-    access_key_id: AKIAIVORNALE7NHD3T6Q
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: BsLXeXUPsCJdX4tawrDnO8OFK5Hk4kzlDTiyH93En6TbjUargVAWDMcHVj7TUhr7+3Tao1W1zb0G4SJe9kHv+jrky0yE72KvoG3YAON0VXWKizxBAKkgHE2RxSTNAwDeKbi2G6YJfNDescBBfX7zEohShdXglQu7CGaUQKRaiI4=
-    bucket: qgroundcontrol
+      secure: LTFfh+WjeRguNe6b7R+Htuf+9GULyorBDUcV2mKkvEXrdytcQgDRFPtS32ubl/pjfOrKgKNwg173M3iFEG1cFKZklYnH4OlMYFH2VWxoTgrUfsxBy8JVtEObysl2mVV0QrLvVvvd9/oeaz2HNCrVHxynaM3nt5t4uIqeiZBxbYrrAOrKRNsBhrulixRs+9gHknxsQr1feQlyVnsdKURJaWSjw0lhKo9cPcsdsq6kCOpO81ZX4DLwK6i+NCu7V5J31UAcWvcXhv/fg+UKzMxgecog/pHZjqXx9kcqNQkoEstGJeTtzYf3YpzLBFApWxF64M9dVR+qVjE5MOS4RzdPrsLW1awIcCowOKBkkXYqJ7/69rB7lWwFugHM6r9D7wz2IXG9qayq9PGhX6PJNF/FNc+dmkagPkHGchQnYCZZ5TTf/T3Af0iAH9HwkNXDG1NDRldrk2EbBEUWA/ryJDmUgPj6tmSvkbXgRKmEaIUk6uFovyBBMQbocVLmTIppvb8KNK9IxXDE01rsDqn0BmlPuqatqzGAG3McpFegKITOKhfqKgayMRNsv9eoU6ioL146y4m/C+DGwLfTHY/G1yD97/FKqo+LkMutLr7VzVNLmmjvsIdTg5sAZzdHkwdu3x97Uj1XddOSajDogDgwwvuiEWstwP2vB8rqtud+f9hymFc=
+    bucket: downloads.bluerobotics.com
     local_dir: ${SHADOW_BUILD_DIR}/release/package
-    upload-dir: builds/${TRAVIS_BRANCH}
+    upload-dir: QGC/builds/${TRAVIS_BRANCH}
     acl: public_read
-    region: us-west-2
+    region: us-east-1
     skip_cleanup: true
     on:
       all_branches: true
@@ -219,14 +219,14 @@ deploy:
 
   # deploy tagged installers to s3 latest/
   - provider: s3
-    access_key_id: AKIAIVORNALE7NHD3T6Q
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: BsLXeXUPsCJdX4tawrDnO8OFK5Hk4kzlDTiyH93En6TbjUargVAWDMcHVj7TUhr7+3Tao1W1zb0G4SJe9kHv+jrky0yE72KvoG3YAON0VXWKizxBAKkgHE2RxSTNAwDeKbi2G6YJfNDescBBfX7zEohShdXglQu7CGaUQKRaiI4=
-    bucket: qgroundcontrol
+      secure: LTFfh+WjeRguNe6b7R+Htuf+9GULyorBDUcV2mKkvEXrdytcQgDRFPtS32ubl/pjfOrKgKNwg173M3iFEG1cFKZklYnH4OlMYFH2VWxoTgrUfsxBy8JVtEObysl2mVV0QrLvVvvd9/oeaz2HNCrVHxynaM3nt5t4uIqeiZBxbYrrAOrKRNsBhrulixRs+9gHknxsQr1feQlyVnsdKURJaWSjw0lhKo9cPcsdsq6kCOpO81ZX4DLwK6i+NCu7V5J31UAcWvcXhv/fg+UKzMxgecog/pHZjqXx9kcqNQkoEstGJeTtzYf3YpzLBFApWxF64M9dVR+qVjE5MOS4RzdPrsLW1awIcCowOKBkkXYqJ7/69rB7lWwFugHM6r9D7wz2IXG9qayq9PGhX6PJNF/FNc+dmkagPkHGchQnYCZZ5TTf/T3Af0iAH9HwkNXDG1NDRldrk2EbBEUWA/ryJDmUgPj6tmSvkbXgRKmEaIUk6uFovyBBMQbocVLmTIppvb8KNK9IxXDE01rsDqn0BmlPuqatqzGAG3McpFegKITOKhfqKgayMRNsv9eoU6ioL146y4m/C+DGwLfTHY/G1yD97/FKqo+LkMutLr7VzVNLmmjvsIdTg5sAZzdHkwdu3x97Uj1XddOSajDogDgwwvuiEWstwP2vB8rqtud+f9hymFc=
+    bucket: downloads.bluerobotics.com
     local_dir: ${SHADOW_BUILD_DIR}/release/package
-    upload-dir: latest
+    upload-dir: QGC/latest
     acl: public_read
-    region: us-west-2
+    region: us-east-1
     skip_cleanup: true
     on:
       tags: true
@@ -234,36 +234,28 @@ deploy:
 
   # deploy tagged installers to s3 version folder
   - provider: s3
-    access_key_id: AKIAIVORNALE7NHD3T6Q
+    access_key_id: AKIAI42TETMLX6KJRTRA
     secret_access_key:
-      secure: BsLXeXUPsCJdX4tawrDnO8OFK5Hk4kzlDTiyH93En6TbjUargVAWDMcHVj7TUhr7+3Tao1W1zb0G4SJe9kHv+jrky0yE72KvoG3YAON0VXWKizxBAKkgHE2RxSTNAwDeKbi2G6YJfNDescBBfX7zEohShdXglQu7CGaUQKRaiI4=
-    bucket: qgroundcontrol
+      secure: LTFfh+WjeRguNe6b7R+Htuf+9GULyorBDUcV2mKkvEXrdytcQgDRFPtS32ubl/pjfOrKgKNwg173M3iFEG1cFKZklYnH4OlMYFH2VWxoTgrUfsxBy8JVtEObysl2mVV0QrLvVvvd9/oeaz2HNCrVHxynaM3nt5t4uIqeiZBxbYrrAOrKRNsBhrulixRs+9gHknxsQr1feQlyVnsdKURJaWSjw0lhKo9cPcsdsq6kCOpO81ZX4DLwK6i+NCu7V5J31UAcWvcXhv/fg+UKzMxgecog/pHZjqXx9kcqNQkoEstGJeTtzYf3YpzLBFApWxF64M9dVR+qVjE5MOS4RzdPrsLW1awIcCowOKBkkXYqJ7/69rB7lWwFugHM6r9D7wz2IXG9qayq9PGhX6PJNF/FNc+dmkagPkHGchQnYCZZ5TTf/T3Af0iAH9HwkNXDG1NDRldrk2EbBEUWA/ryJDmUgPj6tmSvkbXgRKmEaIUk6uFovyBBMQbocVLmTIppvb8KNK9IxXDE01rsDqn0BmlPuqatqzGAG3McpFegKITOKhfqKgayMRNsv9eoU6ioL146y4m/C+DGwLfTHY/G1yD97/FKqo+LkMutLr7VzVNLmmjvsIdTg5sAZzdHkwdu3x97Uj1XddOSajDogDgwwvuiEWstwP2vB8rqtud+f9hymFc=
+    bucket: downloads.bluerobotics.com
     local_dir: ${SHADOW_BUILD_DIR}/release/package
-    upload-dir: ${TRAVIS_BRANCH}
+    upload-dir: QGC/${TRAVIS_BRANCH}
     acl: public_read
-    region: us-west-2
+    region: us-east-1
     skip_cleanup: true
     on:
       tags: true
       condition: $CONFIG = installer
 
-  # deploy installers to Github releases if on a tag
   - provider: releases
-    api-key:
-      secure: K/Zqr/FCC7QvzFxYvBtCinPkacQq2ubJ2qm982+38Zf/KjibVOF1dEbVdrGZmII6Tg5DaQzNXGYkg5PvYmJgT9xRsqeQjeYIUYqYZpAt+HYWA38AVfMU8jip/1P1wmwqD469nzJOBBa8yfsMs6Ca7tBaNl/zTxCRGnAgEzqtkdQ=
+    api_key:
+      secure: "g3GmQKYf6yG/Lv9yCbxGQL6F1Thjxjpsn5IEbRmoY35pIq9cJ/q6WMBsKWavewbfS5qYLHH954rxR+aIwzu0HzFR0946YxHoDqLa7ptkYFaw94SOf/u9fAw0e3pn7BCJR/RtuCWAJussT1HFebrPIr8t1IyB8RE3wxFYYUkN1DgqdGojvungCxki82fPMGGyF3pHhaqdX6L0nHN49au/YSj2kGEFhCLXArkzsmIIBgr+OyVXiasoUHi8E/3x2K3aQAmIQMisI4iq+FUMUnMIqNPlfGnao7hpXXKYRnNDo31Ti1lWZnx2e2OJgHGV4UhaXiw9Lf5q48q6+OObvWMlVLMkic1enqxSlYxhAUkqTRysBcCeU94Faj3Tl3X7t+xhJrAhD9/zw9umJ6NMDGeBXPxClcs2Q7fjCuU1O4h56AIIpAQczuEB9Vza3CYCGsNrFpTN5TuXosdqlPHwPc2f6S/0BZll/o1FY19X0xpEPVZE1kNTEW30HGYzdb78OClTbewYNCEIMQE7mZNRMllPbvP/Hl9Wqgi073eMJEj6mRja2rTw8uyXhso84dFHJkjlBpdueqhEr8B7Fp/+nj2AXtDkgnjWpDqfcgkEFZah6XTToGSYSgffnLb+ND/nzoJtkm83FsBe++cPjbXQZ9ER5i1XT9z4POasszxjToifeeI="
     file_glob: true
     file:
       - ${SHADOW_BUILD_DIR}/release/package/qgroundcontrol.*
       - ${SHADOW_BUILD_DIR}/release/package/QGroundControl.*
-    skip_cleanup: true
+    skip-cleanup: true
     on:
       tags: true
       condition: $CONFIG = installer
 
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/60b033428ae9dc715662
-    on_success: change
-    on_failure: always
-    on_start: never
