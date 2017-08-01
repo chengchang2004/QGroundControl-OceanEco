@@ -424,7 +424,7 @@ LogDownloadController::_findMissingData()
         _downloadData->advanceChunk();
     }
 
-    if(_retries++ > 2) {
+    if(_retries++ > 3) {
         _downloadData->entry->setStatus(QString(tr("Timed Out")));
         //-- Give up
         qWarning() << "Too many errors retreiving log data. Giving up.";
