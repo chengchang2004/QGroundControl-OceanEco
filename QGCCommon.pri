@@ -116,7 +116,7 @@ exists ($$PWD/.git) {
     GIT_TIME     = $$system(git --git-dir $$PWD/.git --work-tree $$PWD show --oneline --format=\"%ci\" -s HEAD)
 
     # determine if we're on a tag matching vX.Y.Z (stable release)
-    contains(GIT_DESCRIBE, v[0-9].[0-9].[0-9]) {
+    contains(GIT_DESCRIBE, v[0-9].[0-9].[0-9].*) {
         # release version "vX.Y.Z"
         GIT_VERSION = $${GIT_DESCRIBE}
     } else {
@@ -124,9 +124,12 @@ exists ($$PWD/.git) {
         GIT_VERSION = "Development $${GIT_BRANCH}:$${GIT_HASH} $${GIT_TIME}"
     }
 
-    VERSION      = $$replace(GIT_DESCRIBE, "v", "")
-    VERSION      = $$replace(VERSION, "-", ".")
+    VERSION      = $$replace(GIT_DESCRIBE, -.*, "")
+    VERSION      = $$replace(VERSION, "v", "")
     VERSION      = $$section(VERSION, ".", 0, 3)
+
+    message(Version is $${VERSION})
+
     MacBuild {
         MAC_VERSION  = $$section(VERSION, ".", 0, 2)
         MAC_BUILD    = $$section(VERSION, ".", 3, 3)
