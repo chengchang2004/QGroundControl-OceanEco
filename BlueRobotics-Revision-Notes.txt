@@ -1,0 +1,34 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4(BlueRobotics-Rev1)  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~      09 September 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes from upstream (mavlink) stable release v3.2.4:
+
+- Remove video recording button when dependencies for video recording are not met
+- Flash recording button while recording is in process
+- Add gps coordinates to vehicle telemetry values display
+- Limit the number of joystick buttons to display to 16
+- Support for multiple joysticks with the same name (for xbox360 wireless receiver)
+- Bugfix for crashes on active joystick change
+- Fix missing altitude updates for APM vehicles
+- Don't switch vehicle telemetry view automatically on sensor health warnings
+- Add GPS-enabled sub modes to the mode selection toolbar indicator
+- Fix disabling of restricted setup pages when vehicle is armed
+- Remove camera trigger and vibration pages from vehicle telemetry display for Sub vehicles
+- Remove WiFi warning on sensor calibration page for Sub vehicles
+- Update APM Sub mock link parameters to 3.5.0
+- Hide the record button when the video window is minimized and hidden
+- Update parameter metadata for ArduSub version 3.5.1
+- Add ROV image to the flightmap for Sub vehicles
+- Remove erroneous note about geofence from the Safety Setup page
+- Simplify Camera Setup page
+- Add input hold indicator to vehicle telemetry values display
+- Add minimum arming voltage setting to Power Setup page
+- Add rangefinder distance indicator to vehicle telemetry values display
+- Only allow vehicles identifying with sysid = 1 to be selected as the active vehicle (workaround for Waterlinked Support)
+- Automated continuous integration and deployments
+- Add 'Show advanced settings' option to the General Settings page
+- Add Tuning Setup page for Sub vehicles (show advanced settings/app restart required)
+- Add buttons to grow/shrink the size of the PiP window
+- Add the option to select custom brand image to display in upper-right corner of the UI
