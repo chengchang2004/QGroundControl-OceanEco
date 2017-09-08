@@ -29,21 +29,22 @@ QGC_LOGGING_CATEGORY(VideoReceiverLog, "VideoReceiverLog")
 
 #if defined(QGC_GST_STREAMING)
 
-static const char* kVideoExtensions[] =
-{
-    "mkv",
-    "mov",
-    "mp4"
-};
+//static const char* kVideoExtensions[] =
+//{
+//    "mkv",
+//    "mov",
+//    "mp4"
+//};
 
-static const char* kVideoMuxes[] =
-{
-    "matroskamux",
-    "qtmux",
-    "mp4mux"
-};
+//static const char* kVideoMuxes[] =
+//{
+//    "matroskamux",
+//    "qtmux",
+//    "mp4mux"
+//};
 
-#define NUM_MUXES (sizeof(kVideoMuxes) / sizeof(char*))
+//#define NUM_MUXES (sizeof(kVideoMuxes) / sizeof(char*))
+#define NUM_MUXES 1
 
 #endif
 
@@ -235,7 +236,6 @@ VideoReceiver::start()
     GstCaps*        caps        = NULL;
     GstElement*     demux       = NULL;
     GstElement*     parser      = NULL;
-    GstElement*     queue       = NULL;
     GstElement*     decoder     = NULL;
 
     do {
@@ -284,32 +284,22 @@ VideoReceiver::start()
             break;
         }
 
-        if((_tee = gst_element_factory_make("tee", NULL)) == NULL)  {
-            qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('tee')";
-            break;
-        }
-
-        if((queue = gst_element_factory_make("queue", NULL)) == NULL)  {
-            qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('queue')";
-            break;
-        }
-
-        gst_bin_add_many(GST_BIN(_pipeline), dataSource, demux, parser, _tee, queue, decoder, _videoSink, NULL);
+        gst_bin_add_many(GST_BIN(_pipeline), dataSource, demux, parser, decoder, _videoSink, NULL);
 
         if(isUdp) {
             // Link the pipeline in front of the tee
-            if(!gst_element_link_many(dataSource, demux, parser, _tee, queue, decoder, _videoSink, NULL)) {
+            if(!gst_element_link_many(dataSource, demux, parser, decoder, _videoSink, NULL)) {
                 qCritical() << "Unable to link elements.";
                 break;
             }
         } else {
-            if(!gst_element_link_many(demux, parser, _tee, queue, decoder, _videoSink, NULL)) {
+            if(!gst_element_link_many(demux, parser, decoder, _videoSink, NULL)) {
                 qCritical() << "Unable to link elements.";
                 break;
             }
         }
 
-        dataSource = demux = parser = queue = decoder = NULL;
+        dataSource = demux = parser = decoder = NULL;
 
         GstBus* bus = NULL;
 
@@ -349,16 +339,6 @@ VideoReceiver::start()
 
         if (dataSource != NULL) {
             gst_object_unref(dataSource);
-            dataSource = NULL;
-        }
-
-        if (_tee != NULL) {
-            gst_object_unref(_tee);
-            dataSource = NULL;
-        }
-
-        if (queue != NULL) {
-            gst_object_unref(queue);
             dataSource = NULL;
         }
 
@@ -520,87 +500,87 @@ VideoReceiver::_onBusMessage(GstBus* bus, GstMessage* msg, gpointer data)
 //   we are adding these elements->  +->teepad-->queue-->matroskamux-->_filesink |
 //                                        |                                      |
 //                                        +--------------------------------------+
-void
-VideoReceiver::startRecording(void)
-{
-#if defined(QGC_GST_STREAMING)
-
-    qCDebug(VideoReceiverLog) << "startRecording()";
-    // exit immediately if we are already recording
-    if(_pipeline == NULL || _recording) {
-        qCDebug(VideoReceiverLog) << "Already recording!";
-        return;
-    }
-
-    QString savePath = qgcApp()->toolbox()->settingsManager()->appSettings()->videoSavePath();
-    if(savePath.isEmpty()) {
-        qgcApp()->showMessage(tr("Unabled to record video. Video save path must be specified in Settings."));
-        return;
-    }
-
-    uint32_t muxIdx = qgcApp()->toolbox()->settingsManager()->videoSettings()->recordingFormat()->rawValue().toUInt();
-    if(muxIdx >= NUM_MUXES) {
-        qgcApp()->showMessage(tr("Invalid video format defined."));
-        return;
-    }
-
-    _sink           = new Sink();
-    _sink->teepad   = gst_element_get_request_pad(_tee, "src_%u");
-    _sink->queue    = gst_element_factory_make("queue", NULL);
-    _sink->parse    = gst_element_factory_make("h264parse", NULL);
-    _sink->mux      = gst_element_factory_make(kVideoMuxes[muxIdx], NULL);
-    _sink->filesink = gst_element_factory_make("filesink", NULL);
-    _sink->removing = false;
-
-    if(!_sink->teepad || !_sink->queue || !_sink->mux || !_sink->filesink || !_sink->parse) {
-        qCritical() << "VideoReceiver::startRecording() failed to make _sink elements";
-        return;
-    }
-
-    QString videoFile;
-    videoFile = savePath + "/" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh.mm.ss") + "." + kVideoExtensions[muxIdx];
-
-    g_object_set(G_OBJECT(_sink->filesink), "location", qPrintable(videoFile), NULL);
-    qCDebug(VideoReceiverLog) << "New video file:" << videoFile;
-
-    gst_object_ref(_sink->queue);
-    gst_object_ref(_sink->parse);
-    gst_object_ref(_sink->mux);
-    gst_object_ref(_sink->filesink);
-
-    gst_bin_add_many(GST_BIN(_pipeline), _sink->queue, _sink->parse, _sink->mux, _sink->filesink, NULL);
-    gst_element_link_many(_sink->queue, _sink->parse, _sink->mux, _sink->filesink, NULL);
-
-    gst_element_sync_state_with_parent(_sink->queue);
-    gst_element_sync_state_with_parent(_sink->parse);
-    gst_element_sync_state_with_parent(_sink->mux);
-    gst_element_sync_state_with_parent(_sink->filesink);
-
-    GstPad* sinkpad = gst_element_get_static_pad(_sink->queue, "sink");
-    gst_pad_link(_sink->teepad, sinkpad);
-    gst_object_unref(sinkpad);
-
-    _recording = true;
-    emit recordingChanged();
-    qCDebug(VideoReceiverLog) << "Recording started";
-#endif
-}
-
-//-----------------------------------------------------------------------------
-void
-VideoReceiver::stopRecording(void)
-{
-#if defined(QGC_GST_STREAMING)
-    qCDebug(VideoReceiverLog) << "stopRecording()";
-    // exit immediately if we are not recording
-    if(_pipeline == NULL || !_recording) {
-        qCDebug(VideoReceiverLog) << "Not recording!";
-        return;
-    }
-    // Wait for data block before unlinking
-    gst_pad_add_probe(_sink->teepad, GST_PAD_PROBE_TYPE_IDLE, _unlinkCallBack, this, NULL);
-#endif
-}
+//void
+//VideoReceiver::startRecording(void)
+//{
+//#if defined(QGC_GST_STREAMING)
+//
+//    qCDebug(VideoReceiverLog) << "startRecording()";
+//    // exit immediately if we are already recording
+//    if(_pipeline == NULL || _recording) {
+//        qCDebug(VideoReceiverLog) << "Already recording!";
+//        return;
+//    }
+//
+//    QString savePath = qgcApp()->toolbox()->settingsManager()->appSettings()->videoSavePath();
+//    if(savePath.isEmpty()) {
+//        qgcApp()->showMessage(tr("Unabled to record video. Video save path must be specified in Settings."));
+//        return;
+//    }
+//
+//    uint32_t muxIdx = qgcApp()->toolbox()->settingsManager()->videoSettings()->recordingFormat()->rawValue().toUInt();
+//    if(muxIdx >= NUM_MUXES) {
+//        qgcApp()->showMessage(tr("Invalid video format defined."));
+//        return;
+//    }
+//
+//    _sink           = new Sink();
+//    _sink->teepad   = gst_element_get_request_pad(_tee, "src_%u");
+//    _sink->queue    = gst_element_factory_make("queue", NULL);
+//    _sink->parse    = gst_element_factory_make("h264parse", NULL);
+//    _sink->mux      = gst_element_factory_make(kVideoMuxes[muxIdx], NULL);
+//    _sink->filesink = gst_element_factory_make("filesink", NULL);
+//    _sink->removing = false;
+//
+//    if(!_sink->teepad || !_sink->queue || !_sink->mux || !_sink->filesink || !_sink->parse) {
+//        qCritical() << "VideoReceiver::startRecording() failed to make _sink elements";
+//        return;
+//    }
+//
+//    QString videoFile;
+//    videoFile = savePath + "/" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh.mm.ss") + "." + kVideoExtensions[muxIdx];
+//
+//    g_object_set(G_OBJECT(_sink->filesink), "location", qPrintable(videoFile), NULL);
+//    qCDebug(VideoReceiverLog) << "New video file:" << videoFile;
+//
+//    gst_object_ref(_sink->queue);
+//    gst_object_ref(_sink->parse);
+//    gst_object_ref(_sink->mux);
+//    gst_object_ref(_sink->filesink);
+//
+//    gst_bin_add_many(GST_BIN(_pipeline), _sink->queue, _sink->parse, _sink->mux, _sink->filesink, NULL);
+//    gst_element_link_many(_sink->queue, _sink->parse, _sink->mux, _sink->filesink, NULL);
+//
+//    gst_element_sync_state_with_parent(_sink->queue);
+//    gst_element_sync_state_with_parent(_sink->parse);
+//    gst_element_sync_state_with_parent(_sink->mux);
+//    gst_element_sync_state_with_parent(_sink->filesink);
+//
+//    GstPad* sinkpad = gst_element_get_static_pad(_sink->queue, "sink");
+//    gst_pad_link(_sink->teepad, sinkpad);
+//    gst_object_unref(sinkpad);
+//
+//    _recording = true;
+//    emit recordingChanged();
+//    qCDebug(VideoReceiverLog) << "Recording started";
+//#endif
+//}
+//
+////-----------------------------------------------------------------------------
+//void
+//VideoReceiver::stopRecording(void)
+//{
+//#if defined(QGC_GST_STREAMING)
+//    qCDebug(VideoReceiverLog) << "stopRecording()";
+//    // exit immediately if we are not recording
+//    if(_pipeline == NULL || !_recording) {
+//        qCDebug(VideoReceiverLog) << "Not recording!";
+//        return;
+//    }
+//    // Wait for data block before unlinking
+//    gst_pad_add_probe(_sink->teepad, GST_PAD_PROBE_TYPE_IDLE, _unlinkCallBack, this, NULL);
+//#endif
+//}
 
 //-----------------------------------------------------------------------------
 // This is only installed on the transient _pipelineStopRec in order

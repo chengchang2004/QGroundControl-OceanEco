@@ -76,8 +76,8 @@ public slots:
     void start                      ();
     void stop                       ();
     void setUri                     (const QString& uri);
-    void stopRecording              ();
-    void startRecording             ();
+//    void stopRecording              ();
+//    void startRecording             ();
 
 private slots:
     void _updateTimer               ();
