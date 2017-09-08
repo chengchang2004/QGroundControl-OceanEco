@@ -55,7 +55,10 @@ FlightMap {
     property bool   _keepVehicleCentered:       _mainIsMap ? false : true
 
     // Track last known map position and zoom from Fly view in settings
-    onZoomLevelChanged: QGroundControl.flightMapZoom = zoomLevel
+    onZoomLevelChanged: {
+        QGroundControl.flightMapZoom = zoomLevel
+        //console.log(zoomLevel)
+    }
     onCenterChanged:    QGroundControl.flightMapPosition = center
 
     // When the user pans the map we stop responding to vehicle coordinate updates until the panRecenterTimer fires
