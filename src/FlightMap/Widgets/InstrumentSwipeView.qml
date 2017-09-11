@@ -22,7 +22,9 @@ Item {
     property real   _margins:       ScreenTools.defaultFontPixelWidth / 2
     property real   _pageWidth:     _root.width
     property int    _currentPage:   0
-    property int    _maxPage:       _activeVehicle.sub ? 1 : 3
+    property int    _maxPage:       _activeVehicle ?
+                                        _activeVehicle.sub ? 1 : 3
+                                        : 3
 
     onWidthChanged: showPage(_currentPage)
 
@@ -79,14 +81,14 @@ Item {
                 qgcView:    _root.qgcView
                 textColor:  _root.textColor
                 maxHeight:  _root.maxHeight
-                visible:    !_activeVehicle.sub
+                visible:    _activeVehicle ? !_activeVehicle.sub : false
             }
             VibrationWidget {
                 width:              _pageWidth
                 textColor:          _root.textColor
                 backgroundColor:    _root.backgroundColor
                 maxHeight:          _root.maxHeight
-                visible:            !_activeVehicle.sub
+                visible:    _activeVehicle ? !_activeVehicle.sub : false
             }
         }
 
