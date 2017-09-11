@@ -4,7 +4,7 @@
     "shortDescription": "Video source",
     "longDescription":  "Source for video. UDP, RTSP and UVC Cameras may be supported depending on Vehicle and ground station version.",
     "type":             "string",
-    "defaultValue":     ""
+    "defaultValue":     "UDP Video Stream"
 },
 {
     "name":             "VideoUDPPort",
