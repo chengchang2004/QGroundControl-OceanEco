@@ -1,6 +1,6 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4(BlueRobotics-Rev1)  ~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~      09 September 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev1   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~      12 September 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Changes from upstream (mavlink) stable release v3.2.4:
@@ -32,3 +32,6 @@ Changes from upstream (mavlink) stable release v3.2.4:
 - Add Tuning Setup page for Sub vehicles (show advanced settings/app restart required)
 - Add buttons to grow/shrink the size of the PiP window
 - Add the option to select custom brand image to display in upper-right corner of the UI
+- Increase the maximum map zoom level from 20 to 23
+- Remove second queue element downstream from avdec_h264 element in video streaming pipeline (attempt to improve video performance on Windows machines)
+- Make UDP video stream the default video stream source option
