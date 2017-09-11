@@ -237,7 +237,6 @@ VideoReceiver::start()
     GstElement*     parser      = NULL;
     GstElement*     queue       = NULL;
     GstElement*     decoder     = NULL;
-    GstElement*     queue1      = NULL;
 
     do {
         if ((_pipeline = gst_pipeline_new("receiver")) == NULL) {
@@ -280,6 +279,11 @@ VideoReceiver::start()
             break;
         }
 
+        if ((decoder = gst_element_factory_make("avdec_h264", "h264-decoder")) == NULL) {
+            qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('avdec_h264')";
+            break;
+        }
+
         if((_tee = gst_element_factory_make("tee", NULL)) == NULL)  {
             qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('tee')";
             break;
@@ -290,21 +294,11 @@ VideoReceiver::start()
             break;
         }
 
-        if ((decoder = gst_element_factory_make("avdec_h264", "h264-decoder")) == NULL) {
-            qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('avdec_h264')";
-            break;
-        }
-
-        if ((queue1 = gst_element_factory_make("queue", NULL)) == NULL) {
-            qCritical() << "VideoReceiver::start() failed. Error with gst_element_factory_make('queue') [1]";
-            break;
-        }
-
-        gst_bin_add_many(GST_BIN(_pipeline), dataSource, demux, parser, _tee, queue, decoder, queue1, _videoSink, NULL);
+        gst_bin_add_many(GST_BIN(_pipeline), dataSource, demux, parser, _tee, queue, decoder, _videoSink, NULL);
 
         if(isUdp) {
             // Link the pipeline in front of the tee
-            if(!gst_element_link_many(dataSource, demux, parser, _tee, queue, decoder, queue1, _videoSink, NULL)) {
+            if(!gst_element_link_many(dataSource, demux, parser, _tee, queue, decoder, _videoSink, NULL)) {
                 qCritical() << "Unable to link elements.";
                 break;
             }
