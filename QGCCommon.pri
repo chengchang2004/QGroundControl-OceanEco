@@ -124,6 +124,9 @@ exists ($$PWD/.git) {
         GIT_VERSION = "Development $${GIT_BRANCH}:$${GIT_HASH} $${GIT_TIME}"
     }
 
+    # Override for this work-around build
+    GIT_VERSION = "v3.2.4-BlueRobotics-Rev3 (Recording Disabled)"
+
     VERSION      = $$replace(GIT_DESCRIBE, -.*, "")
     VERSION      = $$replace(VERSION, "v", "")
     VERSION      = $$section(VERSION, ".", 0, 3)
