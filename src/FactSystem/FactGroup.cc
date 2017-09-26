@@ -85,7 +85,7 @@ void FactGroup::_addFact(Fact* fact, const QString& name)
     }
 
     if (!_nameToFactMetaDataMap.contains(name)) {
-        qWarning() << "No metadata for fact:" << name;
+        qDebug() << "No metadata for fact:" << name;
         return;
     }
 
