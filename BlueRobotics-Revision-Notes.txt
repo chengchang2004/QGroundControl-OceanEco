@@ -1,4 +1,21 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev2   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~      26 September 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes since Rev1:
+
+- Bugfix for Video Stream Source default to UDP
+- Bugfix for joystick TX mode initialization
+- Update joystick mapping database (specifically for XBox One on Mac OSX)
+- Make Sub vehicle-specific fact metadata for vehicle values widget (display 'depth' instead of 'altitude')
+- Remove auto-delete videos 'feature'
+- Clarify temperature fact metadata for Sub ('Internal Temp.' instead of 'Temperature (1)')
+- Better default vehicle values widget settings for Sub operation
+- Change PiP +/- resize buttons to a click and drag mechanism
+- Make video window the main fly view by default
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev1   ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~      12 September 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
