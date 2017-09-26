@@ -17,6 +17,7 @@ import QGroundControl.Palette               1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.Controllers           1.0
+import QGroundControl.SettingsManager       1.0
 
 Rectangle {
     id:         toolBar
@@ -110,6 +111,7 @@ Rectangle {
                 anchors.top:        parent.top
                 anchors.bottom:     parent.bottom
                 exclusiveGroup:     mainActionGroup
+                visible:            !(QGroundControl.multiVehicleManager.activeVehicle.sub && !QGroundControl.settingsManager.appSettings.showAdvancedSettings.value)
                 source:             "/qmlimages/Plan.svg"
                 onClicked:          toolBar.showPlanView()
             }
