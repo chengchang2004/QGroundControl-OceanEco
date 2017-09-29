@@ -41,5 +41,17 @@
     "type":             "float",
     "decimalPlaces":    2,
     "units":            "meters"
+},
+{
+    "name":             "pitch input",
+    "shortDescription": "Pitch Input",
+    "type":             "int16",
+    "units":            "%"
+},
+{
+    "name":             "roll input",
+    "shortDescription": "Roll Input",
+    "type":             "int16",
+    "units":            "%"
 }
 ]

@@ -206,6 +206,16 @@ void ArduSubFirmwarePlugin::_handleMavlinkMessage(mavlink_message_t* message)
         _infoFactGroup.getFact("rangefinder distance")->setRawValue(msg.distance);
         break;
     }
+    case (MAVLINK_MSG_ID_RC_CHANNELS_RAW):
+    {
+        mavlink_rc_channels_raw_t msg;
+        mavlink_msg_rc_channels_raw_decode(message, &msg);
+        int pitch = 100 * (msg.chan1_raw - 1500) / (1900 - 1500);
+        int roll  = 100 * (msg.chan2_raw - 1500) / (1900 - 1500);
+        _infoFactGroup.getFact("pitch input")->setRawValue(pitch);
+        _infoFactGroup.getFact("roll input")->setRawValue(roll);
+        break;
+    }
     }
 }
 
@@ -226,6 +236,8 @@ const char* APMSubmarineFactGroup::_lightsLevel2FactName        = "lights 2";
 const char* APMSubmarineFactGroup::_pilotGainFactName           = "pilot gain";
 const char* APMSubmarineFactGroup::_inputHoldFactName           = "input hold";
 const char* APMSubmarineFactGroup::_rangefinderDistanceFactName = "rangefinder distance";
+const char* APMSubmarineFactGroup::_pitchInputFactName          = "pitch input";
+const char* APMSubmarineFactGroup::_rollInputFactName           = "roll input";
 
 APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     : FactGroup(300, ":/json/Vehicle/SubmarineFact.json", parent)
@@ -236,6 +248,8 @@ APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     , _pilotGainFact           (0, _pilotGainFactName,           FactMetaData::valueTypeDouble)
     , _inputHoldFact           (0, _inputHoldFactName,           FactMetaData::valueTypeDouble)
     , _rangefinderDistanceFact (0, _rangefinderDistanceFactName, FactMetaData::valueTypeDouble)
+    , _pitchInputFact          (0, _pitchInputFactName,          FactMetaData::valueTypeDouble)
+    , _rollInputFact           (0, _rollInputFactName,           FactMetaData::valueTypeDouble)
 {
     _addFact(&_camTiltFact,             _camTiltFactName);
     _addFact(&_tetherTurnsFact,         _tetherTurnsFactName);
@@ -244,6 +258,8 @@ APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     _addFact(&_pilotGainFact,           _pilotGainFactName);
     _addFact(&_inputHoldFact,           _inputHoldFactName);
     _addFact(&_rangefinderDistanceFact, _rangefinderDistanceFactName);
+    _addFact(&_pitchInputFact,          _pitchInputFactName);
+    _addFact(&_rollInputFact,           _rollInputFactName);
 
     // Start out as not available "--.--"
     _camTiltFact.setRawValue             (std::numeric_limits<float>::quiet_NaN());
@@ -253,6 +269,8 @@ APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     _pilotGainFact.setRawValue           (std::numeric_limits<float>::quiet_NaN());
     _inputHoldFact.setRawValue           (std::numeric_limits<float>::quiet_NaN());
     _rangefinderDistanceFact.setRawValue (std::numeric_limits<float>::quiet_NaN());
+    _pitchInputFact.setRawValue          (std::numeric_limits<float>::quiet_NaN());
+    _rollInputFact.setRawValue           (std::numeric_limits<float>::quiet_NaN());
 
 }
 
