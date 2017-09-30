@@ -53,5 +53,12 @@
     "shortDescription": "Roll Input",
     "type":             "int16",
     "units":            "%"
+},
+{
+    "name":             "stick mode",
+    "shortDescription": "Stick Mode",
+    "type":             "int16",
+    "enumStrings":      "Maneuver,Attitude",
+    "enumValues":       "0,1"
 }
 ]

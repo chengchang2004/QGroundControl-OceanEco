@@ -190,6 +190,8 @@ void ArduSubFirmwarePlugin::_handleNamedValueFloat(mavlink_message_t* message)
         _infoFactGroup.getFact("pilot gain")->setRawValue(value.value * 100);
     } else if (name == "InputHold") {
         _infoFactGroup.getFact("input hold")->setRawValue(value.value);
+    } else if (name == "StickMode") {
+        _infoFactGroup.getFact("stick mode")->setRawValue(value.value);
     }
 }
 
@@ -238,6 +240,7 @@ const char* APMSubmarineFactGroup::_inputHoldFactName           = "input hold";
 const char* APMSubmarineFactGroup::_rangefinderDistanceFactName = "rangefinder distance";
 const char* APMSubmarineFactGroup::_pitchInputFactName          = "pitch input";
 const char* APMSubmarineFactGroup::_rollInputFactName           = "roll input";
+const char* APMSubmarineFactGroup::_stickModeFactName           = "stick mode";
 
 APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     : FactGroup(300, ":/json/Vehicle/SubmarineFact.json", parent)
@@ -250,6 +253,7 @@ APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     , _rangefinderDistanceFact (0, _rangefinderDistanceFactName, FactMetaData::valueTypeDouble)
     , _pitchInputFact          (0, _pitchInputFactName,          FactMetaData::valueTypeDouble)
     , _rollInputFact           (0, _rollInputFactName,           FactMetaData::valueTypeDouble)
+    , _stickModeFact           (0, _stickModeFactName,           FactMetaData::valueTypeDouble)
 {
     _addFact(&_camTiltFact,             _camTiltFactName);
     _addFact(&_tetherTurnsFact,         _tetherTurnsFactName);
@@ -260,6 +264,7 @@ APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     _addFact(&_rangefinderDistanceFact, _rangefinderDistanceFactName);
     _addFact(&_pitchInputFact,          _pitchInputFactName);
     _addFact(&_rollInputFact,           _rollInputFactName);
+    _addFact(&_stickModeFact,           _stickModeFactName);
 
     // Start out as not available "--.--"
     _camTiltFact.setRawValue             (std::numeric_limits<float>::quiet_NaN());
@@ -271,6 +276,7 @@ APMSubmarineFactGroup::APMSubmarineFactGroup(QObject* parent)
     _rangefinderDistanceFact.setRawValue (std::numeric_limits<float>::quiet_NaN());
     _pitchInputFact.setRawValue          (std::numeric_limits<float>::quiet_NaN());
     _rollInputFact.setRawValue           (std::numeric_limits<float>::quiet_NaN());
+    _stickModeFact.setRawValue           (std::numeric_limits<float>::quiet_NaN());
 
 }
 
