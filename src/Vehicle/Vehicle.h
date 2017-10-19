@@ -159,6 +159,7 @@ public:
     Q_PROPERTY(Fact* current            READ current            CONSTANT)
     Q_PROPERTY(Fact* temperature        READ temperature        CONSTANT)
     Q_PROPERTY(Fact* cellCount          READ cellCount          CONSTANT)
+    Q_PROPERTY(Fact* instantPower       READ instantPower       CONSTANT)
 
     Fact* voltage                   (void) { return &_voltageFact; }
     Fact* percentRemaining          (void) { return &_percentRemainingFact; }
@@ -166,6 +167,7 @@ public:
     Fact* current                   (void) { return &_currentFact; }
     Fact* temperature               (void) { return &_temperatureFact; }
     Fact* cellCount                 (void) { return &_cellCountFact; }
+    Fact* instantPower              (void) { return &_instantPowerFact; }
 
 
     static const char* _voltageFactName;
@@ -174,6 +176,7 @@ public:
     static const char* _currentFactName;
     static const char* _temperatureFactName;
     static const char* _cellCountFactName;
+    static const char* _instantPowerFactName;
 
     static const char* _settingsGroup;
 
@@ -183,6 +186,7 @@ public:
     static const int    _currentUnavailable;
     static const double _temperatureUnavailable;
     static const int    _cellCountUnavailable;
+    static const double _instantPowerUnavailable;
 
 private:
     Fact            _voltageFact;
@@ -191,6 +195,7 @@ private:
     Fact            _currentFact;
     Fact            _temperatureFact;
     Fact            _cellCountFact;
+    Fact            _instantPowerFact;
 };
 
 class VehicleTemperatureFactGroup : public FactGroup
