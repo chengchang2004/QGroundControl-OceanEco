@@ -127,6 +127,12 @@ int ArduSubFirmwarePlugin::manualControlReservedButtonCount(void)
     return 0;
 }
 
+bool ArduSubFirmwarePlugin::isCapable(const Vehicle* vehicle, FirmwareCapabilities capabilities)
+{
+    uint32_t available = SetFlightModeCapability | PauseVehicleCapability;
+    return (capabilities & available) == capabilities;
+}
+
 bool ArduSubFirmwarePlugin::supportsThrottleModeCenterZero(void)
 {
     return false;
