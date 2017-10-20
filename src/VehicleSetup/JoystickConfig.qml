@@ -497,27 +497,6 @@ SetupPage {
                                 spacing:    ScreenTools.defaultFontPixelWidth
                                 visible:    advancedSettings.checked
 
-                                QGCLabel {
-                                    id:                 joystickModeLabel
-                                    anchors.baseline:   joystickModeCombo.baseline
-                                    text:               qsTr("Joystick mode:")
-                                }
-
-                                QGCComboBox {
-                                    id:             joystickModeCombo
-                                    currentIndex:   _activeVehicle.joystickMode
-                                    width:          ScreenTools.defaultFontPixelWidth * 20
-                                    model:          _activeVehicle.joystickModes
-
-                                    onActivated: _activeVehicle.joystickMode = index
-                                }
-                            }
-
-                            Row {
-                                width:      parent.width
-                                spacing:    ScreenTools.defaultFontPixelWidth
-                                visible:    advancedSettings.checked
-
                                 QGCCheckBox {
                                     id:         deadband
                                     checked:    controller.deadbandToggle
