@@ -1,4 +1,27 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev3   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~       13 November 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes since Rev2:
+
+- Remove advanced 'joystick mode' settings
+- Add new Fact with current consumption in Watts to vehicle values widget
+- Bugfix disappearing record button
+- Bugfix extra empty tabs in instrument widget
+- Hide plan view when showAdvancedOptions app setting is false
+- Bugfix current monitor pin selection indexModel in APM power setup
+- Add ArduSub 3.5.2 default params for BlueROV2
+- Update new lights step parameter setup for ArduSub
+- Add time and date facts to vehicle values widget
+- Use appsettings setting for camera setup advanced settings visibility
+- Add mount tilt speed slider to camera setup
+- Add temperature units setting
+- Bugfix gear thingy for vehicle values selection in QGCInstrumentWidgetAlternate
+- Use wordwrap on vehicle values
+- Fix instrument widget width issues for 4k screens
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev2   ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~      26 September 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
