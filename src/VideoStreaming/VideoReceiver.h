@@ -82,7 +82,6 @@ private:
     {
         GstPad*         teepad;
         GstElement*     queue;
-        GstElement*     encoder;
         GstElement*     mux;
         GstElement*     filesink;
         gboolean        removing;

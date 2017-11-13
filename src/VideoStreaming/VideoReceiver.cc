@@ -482,7 +482,6 @@ void VideoReceiver::startRecording(void)
     _sink           = new Sink();
     _sink->teepad   = gst_element_get_request_pad(_tee, "src_%u");
     _sink->queue    = gst_element_factory_make("queue", NULL);
-    _sink->encoder  = gst_element_factory_make("x264enc", NULL);
     _sink->mux      = gst_element_factory_make("matroskamux", NULL);
     _sink->filesink = gst_element_factory_make("filesink", NULL);
     _sink->removing = false;
@@ -499,15 +498,13 @@ void VideoReceiver::startRecording(void)
     qCDebug(VideoReceiverLog) << "New video file:" << videoFile;
 
     gst_object_ref(_sink->queue);
-    gst_object_ref(_sink->encoder);
     gst_object_ref(_sink->mux);
     gst_object_ref(_sink->filesink);
 
-    gst_bin_add_many(GST_BIN(_pipeline), _sink->queue, _sink->encoder, _sink->mux, _sink->filesink, NULL);
-    gst_element_link_many(_sink->queue, _sink->encoder, _sink->mux, _sink->filesink, NULL);
+    gst_bin_add_many(GST_BIN(_pipeline), _sink->queue, _sink->mux, _sink->filesink, NULL);
+    gst_element_link_many(_sink->queue, _sink->mux, _sink->filesink, NULL);
 
     gst_element_sync_state_with_parent(_sink->queue);
-    gst_element_sync_state_with_parent(_sink->encoder);
     gst_element_sync_state_with_parent(_sink->mux);
     gst_element_sync_state_with_parent(_sink->filesink);
 
@@ -544,7 +541,6 @@ void VideoReceiver::stopRecording(void)
 void VideoReceiver::_shutdownRecordingBranch()
 {
     gst_bin_remove(GST_BIN(_pipelineStopRec), _sink->queue);
-    gst_bin_remove(GST_BIN(_pipelineStopRec), _sink->encoder);
     gst_bin_remove(GST_BIN(_pipelineStopRec), _sink->mux);
     gst_bin_remove(GST_BIN(_pipelineStopRec), _sink->filesink);
 
@@ -553,12 +549,10 @@ void VideoReceiver::_shutdownRecordingBranch()
     _pipelineStopRec = NULL;
 
     gst_element_set_state(_sink->filesink, GST_STATE_NULL);
-    gst_element_set_state(_sink->encoder, GST_STATE_NULL);
     gst_element_set_state(_sink->mux, GST_STATE_NULL);
     gst_element_set_state(_sink->queue, GST_STATE_NULL);
 
     gst_object_unref(_sink->queue);
-    gst_object_unref(_sink->encoder);
     gst_object_unref(_sink->mux);
     gst_object_unref(_sink->filesink);
 
@@ -581,7 +575,7 @@ void VideoReceiver::_detachRecordingBranch(GstPadProbeInfo* info)
     Q_UNUSED(info)
 
     // Also unlinks and unrefs
-    gst_bin_remove_many(GST_BIN(_pipeline), _sink->queue, _sink->encoder, _sink->mux, _sink->filesink, NULL);
+    gst_bin_remove_many(GST_BIN(_pipeline), _sink->queue, _sink->mux, _sink->filesink, NULL);
 
     // Give tee its pad back
     gst_element_release_request_pad(_tee, _sink->teepad);
@@ -591,8 +585,8 @@ void VideoReceiver::_detachRecordingBranch(GstPadProbeInfo* info)
     _pipelineStopRec = gst_pipeline_new("pipeStopRec");
 
     // Put our elements from the recording branch into the temporary pipeline
-    gst_bin_add_many(GST_BIN(_pipelineStopRec), _sink->queue, _sink->encoder, _sink->mux, _sink->filesink, NULL);
-    gst_element_link_many(_sink->queue, _sink->encoder, _sink->mux, _sink->filesink, NULL);
+    gst_bin_add_many(GST_BIN(_pipelineStopRec), _sink->queue,  _sink->mux, _sink->filesink, NULL);
+    gst_element_link_many(_sink->queue, _sink->mux, _sink->filesink, NULL);
 
     // Add handler for EOS event
     GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipelineStopRec));
