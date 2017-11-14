@@ -103,6 +103,8 @@ void Fact::setRawValue(const QVariant& value)
                 emit _containerRawValueChanged(rawValue());
                 emit rawValueChanged(_rawValue);
             }
+        } else {
+            qWarning() << "setRawValueFailed:" << errorString;
         }
     } else {
         qWarning() << "Meta data pointer missing";
