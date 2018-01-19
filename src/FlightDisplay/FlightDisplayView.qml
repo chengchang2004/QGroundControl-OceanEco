@@ -425,7 +425,7 @@ QGCView {
             anchors.left:       _panel.left
             anchors.bottom:     _panel.bottom
             anchors.margins:    ScreenTools.defaultFontPixelHeight
-            visible:            QGroundControl.videoManager.hasVideo
+            visible:            QGroundControl.videoManager.hasVideo && _flightVideo.state != "popup"
             isHidden:           !_isPipVisible
             isDark:             isBackgroundDark
             enablePopup:        _mainIsMap
