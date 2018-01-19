@@ -359,6 +359,7 @@ QGCView {
 
             // Button to start/stop video recording
             Item {
+                id:                 recordBtnContainer
                 anchors.margins:    ScreenTools.defaultFontPixelHeight / 2
                 anchors.bottom:     parent.bottom
                 anchors.right:      parent.right
@@ -399,6 +400,7 @@ QGCView {
                 }
 
                 MouseArea {
+                    id:             recordBtnMouseArea
                     anchors.fill:   parent
                     onClicked: {
                         if (_videoReceiver) {
@@ -440,6 +442,15 @@ QGCView {
             }
             onNewWidth: {
                 _pipSize = newWidth
+            }
+
+            MouseArea {
+                anchors.bottom: parent.bottom
+                anchors.right:  parent.right
+                height:         recordBtnContainer.height
+                width:          height
+                visible:        _mainIsMap
+                onClicked:      recordBtnMouseArea.clicked(mouse) // passthrough
             }
         }
 
