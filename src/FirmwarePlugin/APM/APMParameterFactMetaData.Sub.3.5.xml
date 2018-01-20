@@ -205,17 +205,12 @@
 <param humanName="Gain steps" name="ArduSub:JS_GAIN_STEPS" documentation="Controls the number of steps between minimum and maximum joystick gain when the gain is adjusted using buttons. Set to 1 to always use JS_GAIN_DEFAULT." user="Standard">
 <field name="Range">1 10</field>
 </param>
-<param humanName="Camera tilt step size" name="ArduSub:JS_CAM_TILT_STEP" documentation="Size of PWM increment on camera tilt servo" user="Standard">
-<field name="Range">30 400</field>
-</param>
-<param humanName="Lights step size" name="ArduSub:JS_LIGHTS_STEP" documentation="Size of PWM increment on lights servo" user="Standard">
-<field name="Range">30 400</field>
+<param humanName="Lights brightness steps" name="ArduSub:JS_LIGHTS_STEPS" documentation="Number of steps in brightness between minimum and maximum brightness" user="Standard">
+<field name="Range">1 10</field>
+<field name="Units">PWM</field>
 </param>
 <param humanName="Throttle gain scalar" name="ArduSub:JS_THR_GAIN" documentation="Scalar for gain on the throttle channel" user="Standard">
 <field name="Range">0.5 4.0</field>
-</param>
-<param humanName="Camera tilt mount center" name="ArduSub:CAM_CENTER" documentation="Servo PWM at camera center position" user="Standard">
-<field name="Range">1000 2000</field>
 </param>
 <param humanName="Frame configuration" name="ArduSub:FRAME_CONFIG" documentation="Set this parameter according to your vehicle/motor configuration" user="Standard">
 <values>
@@ -888,6 +883,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -909,6 +907,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN0_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -954,6 +955,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -975,6 +979,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1022,6 +1029,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1043,6 +1053,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN10_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1088,6 +1101,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1109,6 +1125,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1156,6 +1175,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1177,6 +1199,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN11_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1222,6 +1247,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1243,6 +1271,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1290,6 +1321,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1311,6 +1345,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN12_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1356,6 +1393,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1377,6 +1417,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1424,6 +1467,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1445,6 +1491,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN13_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1490,6 +1539,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1511,6 +1563,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1558,6 +1613,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1579,6 +1637,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN14_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1624,6 +1685,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1645,6 +1709,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1692,6 +1759,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1713,6 +1783,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN15_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1758,6 +1831,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1779,6 +1855,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1826,6 +1905,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1847,6 +1929,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN1_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1892,6 +1977,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1913,6 +2001,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -1960,6 +2051,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -1981,6 +2075,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN2_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2026,6 +2123,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2047,6 +2147,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -2094,6 +2197,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2115,6 +2221,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN3_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2160,6 +2269,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2181,6 +2293,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -2228,6 +2343,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2249,6 +2367,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN4_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2294,6 +2415,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2315,6 +2439,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -2362,6 +2489,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2383,6 +2513,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN5_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2428,6 +2561,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2449,6 +2585,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -2496,6 +2635,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2517,6 +2659,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN6_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2562,6 +2707,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2583,6 +2731,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -2630,6 +2781,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2651,6 +2805,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN7_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2696,6 +2853,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2717,6 +2877,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -2764,6 +2927,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2785,6 +2951,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN8_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2830,6 +2999,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2851,6 +3023,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
@@ -2898,6 +3073,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2919,6 +3097,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN9_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2964,6 +3145,9 @@
 <value code="54">relay_2_on</value>
 <value code="55">relay_2_off</value>
 <value code="56">relay_2_toggle</value>
+<value code="57">relay_3_on</value>
+<value code="58">relay_3_off</value>
+<value code="59">relay_3_toggle</value>
 <value code="61">servo_1_inc</value>
 <value code="62">servo_1_dec</value>
 <value code="63">servo_1_min</value>
@@ -2985,6 +3169,9 @@
 <value code="94">custom_4</value>
 <value code="95">custom_5</value>
 <value code="96">custom_6</value>
+<value code="101">relay_4_on</value>
+<value code="102">relay_4_off</value>
+<value code="103">relay_4_toggle</value>
 </values>
 </param>
 </parameters>
