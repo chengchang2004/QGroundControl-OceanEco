@@ -1,4 +1,22 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev4   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~       22 January 2018       ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes since Rev3:
+
+- Bugfix joystick handling with multiple vehicles connected
+- Autoconnect to independent udp port 14400 for Water Linked system
+- Allow popping out PiP into separate window to throw on separate monitor
+- Remove some unsupported mission commands
+- Add USB NMEA GPS support for showing GCS position
+- Add gstreamer debug logging
+- Fix video codec compliance - remove broken frames at beginning of file, and files will play in most if not all players now
+- Listen for audio stream on udp port 5601, no audio recording yet
+- Update ArduSub parameter metadata for ArduSub v3.5.2
+- Bugfix heading truncated to 0~180 degrees for Water Linked vehicle
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev3   ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~       13 November 2017      ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
