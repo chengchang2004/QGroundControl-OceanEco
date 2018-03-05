@@ -9,7 +9,7 @@ environment:
     CONFIG: debug
     SHADOW_BUILD_DIR: C:\projects\qgroundcontrol\build_windows_debug
   - BUILD: 'Release'
-    CONFIG: installer
+    CONFIG: release
     SHADOW_BUILD_DIR: C:\projects\qgroundcontrol\build_windows_install
 
 install:
