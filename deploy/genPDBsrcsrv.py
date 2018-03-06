@@ -14,8 +14,11 @@ def get_actual_filename(name):
         #File not found
         return None
     return res[0]
-    
+
+print(fileinput)
 filelist = [get_actual_filename(x.rstrip()) for x in fileinput.input(['-'])]
+if not filelist:
+    exit(0)
 prefix_len = len(os.path.commonprefix(filelist))
 
 print("""SRCSRV: ini ------------------------------------------------
