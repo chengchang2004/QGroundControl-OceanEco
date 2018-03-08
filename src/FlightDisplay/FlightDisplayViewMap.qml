@@ -264,7 +264,8 @@ FlightMap {
         anchors.fill: parent
 
         onClicked: {
-            if (guidedActionsController.showGotoLocation && !guidedActionsController.guidedUIVisible) {
+            if ((guidedActionsController.showGotoLocation && !guidedActionsController.guidedUIVisible)
+               || (_activeVehicle.sub && _activeVehicle.guidedMode)) {
                 _gotoHereCoordinate = flightMap.toCoordinate(Qt.point(mouse.x, mouse.y), false /* clipToViewPort */)
                 guidedActionsController.confirmAction(guidedActionsController.actionGoto, _gotoHereCoordinate)
             }

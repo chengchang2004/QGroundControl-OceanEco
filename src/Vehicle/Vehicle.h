@@ -608,7 +608,13 @@ public:
     uint            messagesReceived        () { return _messagesReceived; }
     uint            messagesSent            () { return _messagesSent; }
     uint            messagesLost            () { return _messagesLost; }
-    bool            flying                  () const { return _flying; }
+    bool            flying                  () const {
+                                                    if (sub()) {
+                                                        return _armed;
+                                                    } else {
+                                                        return _flying;
+                                                    }
+                                                }
     bool            landing                 () const { return _landing; }
     bool            guidedMode              () const;
     uint8_t         baseMode                () const { return _base_mode; }

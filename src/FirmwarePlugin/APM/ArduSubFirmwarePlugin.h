@@ -111,6 +111,8 @@ public:
     QList<MAV_CMD> supportedMissionCommands(void) final;
 
     // Overrides from FirmwarePlugin
+    bool    isCapable (const Vehicle *vehicle, FirmwareCapabilities capabilities) final;
+    void    guidedModeGotoLocation(Vehicle* vehicle, const QGeoCoordinate& gotoCoord) final;
     int manualControlReservedButtonCount(void) final;
 
     int defaultJoystickTXMode(void) final { return 3; }
