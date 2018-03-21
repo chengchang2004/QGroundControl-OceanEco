@@ -846,6 +846,7 @@ private slots:
     void _sendMavCommandAgain(void);
     void _clearTrajectoryPoints(void);
     void _clearCameraTriggerPoints(void);
+    void _sendQGCTimeToVehicle(void);
 
 private:
     bool _containsLink(LinkInterface* link);
