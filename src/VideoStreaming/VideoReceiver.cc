@@ -212,6 +212,7 @@ VideoReceiver::_timeout()
 void
 VideoReceiver::start()
 {
+    _stop = false;
     if(!_videoSettings->streamEnabled()->rawValue().toBool() ||
        !_videoSettings->streamConfigured()) {
         qCDebug(VideoReceiverLog) << "start() but not enabled/configured";
@@ -433,6 +434,7 @@ void
 VideoReceiver::stop()
 {
 #if defined(QGC_GST_STREAMING)
+    _stop = true;
     qCDebug(VideoReceiverLog) << "stop()";
     if(!_streaming) {
         _shutdownPipeline();
@@ -872,7 +874,7 @@ VideoReceiver::_updateTimer()
                 stop();
             }
         } else {
-            if(!running() && !_uri.isEmpty() && _videoSettings->streamEnabled()->rawValue().toBool()) {
+            if(!_stop && !running() && !_uri.isEmpty() && _videoSettings->streamEnabled()->rawValue().toBool()) {
                 start();
             }
         }
