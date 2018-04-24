@@ -10,6 +10,7 @@
 
 import QtQuick              2.3
 import QtQuick.Controls     1.2
+import QtQuick.Controls.Styles  1.4
 
 import QGroundControl               1.0
 import QGroundControl.FactSystem    1.0
@@ -54,6 +55,9 @@ SetupPage {
             readonly property int   _rcFunctionRCIN10:              60
             readonly property int   _firstLightsOutChannel:         5
             readonly property int   _lastLightsOutChannel:          14
+            readonly property int   _pwmMax:                        1900
+            readonly property int   _pwmMin:                        1100
+            readonly property int   _pwmTrim:                       1500
 
             Component.onCompleted: {
                 calcLightOutValues()
@@ -145,6 +149,14 @@ SetupPage {
                 ListElement { text: qsTr("Channel 14"); value: 14 }
             }
 
+            ListModel {
+                id: servoOutModel
+                ListElement { text: qsTr("Disabled"); value: 0 }
+                ListElement { text: qsTr("Aux 1"); value: 9  }
+                ListElement { text: qsTr("Aux 2"); value: 10 }
+                ListElement { text: qsTr("Aux 3"); value: 11 }
+            }
+
             Component {
                 id: lightSettings
 
@@ -229,6 +241,112 @@ SetupPage {
                 } // Item
             } // Component - lightSettings
 
+            Component {
+                id: gripperSettings
+
+                Item {
+                    width:  rectangle.x + rectangle.width
+                    height: rectangle.y + rectangle.height
+
+                    Component.onCompleted: {
+                        gripperSpeedSlider.minimumValue = 10
+                        gripperSpeedSlider.maximumValue = 127
+                        gripperSpeedSlider.value = gripperSpeedSlider._fact.value
+                        gripperSpeedSlider._loadComplete = true
+                    }
+
+                    QGCLabel {
+                        id:             gripperSettingsLabel
+                        text:           qsTr("Gripper Settings")
+                        font.family:    ScreenTools.demiboldFontFamily
+                    }
+
+                    Rectangle {
+                        id:                 rectangle
+                        anchors.topMargin:  _margins / 2
+                        anchors.top:        gripperSettingsLabel.bottom
+                        width:              gripperChannelCombo.x + gripperChannelCombo.width  + gripperOutputLabel.width  + _margins
+                        height:             gripperChannelCombo.y + gripperChannelCombo.height + gripperSpeedLabel.height + _margins
+                        color:              palette.windowShade
+
+                        QGCLabel {
+                            id:                 gripperSpeedLabel
+                            anchors.margins:    _margins
+                            anchors.top:        parent.top
+                            anchors.right:      gripperSpeedSlider.left
+                            text:               qsTr("Speed:")
+                        }
+
+                        QGCSlider {
+                            property var _fact: controller.getParameterFact(-1, "MNT_JSTICK_SPD")
+                            property var _loadComplete: false
+                            id: gripperSpeedSlider
+                            width: gripperChannelCombo.width
+
+                            anchors.margins:        _margins
+                            anchors.left:           gripperOutputLabel.right
+                            anchors.verticalCenter: gripperSpeedLabel.verticalCenter
+                            stepSize: _fact.increment ? _fact.increment : 1
+
+                            // Override style to make handles smaller than default
+                            style: SliderStyle {
+                                handle: Rectangle {
+                                    color: qgcPal.button
+                                    border.color: qgcPal.buttonText
+                                    border.width:   1
+                                    implicitWidth: _radius * 2
+                                    implicitHeight: _radius * 2
+                                    radius: _radius
+
+                                    property real _radius: Math.round(ScreenTools.defaultFontPixelHeight * 0.35)
+                                }
+                            }
+
+                            onValueChanged: {
+                                if (_loadComplete) {
+                                    _fact.value = value
+                                }
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onWheel: {
+                                    // do nothing
+                                    wheel.accepted = true;
+                                }
+                                onPressed: {
+                                    // propogate/accept
+                                    mouse.accepted = false;
+                                }
+                                onReleased: {
+                                    // propogate/accept
+                                    mouse.accepted = false;
+                                }
+                            }
+                        }
+
+                        QGCLabel {
+                            id:                 gripperOutputLabel
+                            anchors.margins:    _margins
+                            anchors.left:       parent.left
+                            anchors.baseline:   gripperChannelCombo.baseline
+                            text:               qsTr("Output Channel:")
+                        }
+
+                        QGCComboBox {
+                            id:                 gripperChannelCombo
+                            anchors.margins:    _margins
+                            anchors.top:        gripperSpeedLabel.bottom
+                            anchors.left:       gripperOutputLabel.right
+                            width:              ScreenTools.defaultFontPixelWidth * 15
+                            model:              servoOutModel
+                            currentIndex:       gripperOutIndex
+
+//                            onActivated: setRCFunction(lightsOutModel.get(index).value, lights1Function)
+                        }
+                    } // Rectangle
+                } // Item
+            } // Component - gripperSettings
             Loader {
                 id:                 lightsLoader
                 sourceComponent:    lightSettings
@@ -238,6 +356,12 @@ SetupPage {
                 property int    lights1Function:         _rcFunctionRCIN9
                 property int    lights2Function:         _rcFunctionRCIN10
                 property int    lightsSteps:             1
+            }
+            Loader {
+                id:                 gripperLoader
+                sourceComponent:    gripperSettings
+
+                property int    gripperOutIndex:         0
             }
         } // Column
     } // Component
