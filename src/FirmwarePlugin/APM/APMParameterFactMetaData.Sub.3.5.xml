@@ -230,6 +230,11 @@
 <field name="Increment">1</field>
 <field name="Units">Hz</field>
 </param>
+<param humanName="RC Channel Update Slew Rate" name="ArduSub:MANUAL_SLEW_RATE" documentation="This is slew rate in %/s that will be used in manual mode to avoid large step outputs on the motors. Set to zero to disable." user="Advanced">
+<field name="Range">0 500</field>
+<field name="Increment">10</field>
+<field name="Units">%/s</field>
+</param>
 <param humanName="Acro Roll and Pitch P gain" name="ArduSub:ACRO_RP_P" documentation="Converts pilot roll and pitch into a desired rate of rotation in ACRO and SPORT mode.  Higher values mean faster rate of rotation." user="Standard">
 <field name="Range">1 10</field>
 </param>
@@ -411,15 +416,15 @@
 </param>
 </parameters>
 <parameters name="ARMING_">
-<param humanName="Require Arming Motors " name="ARMING_REQUIRE" documentation="Arming disabled until some requirements are met. If 0, there are no requirements (arm immediately).  If 1, require rudder stick or GCS arming before arming motors and sends the minimum throttle PWM value to the throttle channel when disarmed.  If 2, require rudder stick or GCS arming and send 0 PWM to throttle channel when disarmed. See the ARMING_CHECK_* parameters to see what checks are done before arming. Note, if setting this parameter to 0 a reboot is required to arm the plane.  Also note, even with this parameter at 0, if ARMING_CHECK parameter is not also zero the plane may fail to arm throttle at boot due to a pre-arm check failure. This parameter is relevant for ArduPlane only." user="Advanced">
+<param humanName="Require Arming Motors " name="ARMING_REQUIRE" documentation="Arming disabled until some requirements are met. If 0, there are no requirements (arm immediately).  If 1, require rudder stick or GCS arming before arming motors and sends the minimum throttle PWM value to the throttle channel when disarmed.  If 2, require rudder stick or GCS arming and send 0 PWM to throttle channel when disarmed. See the ARMING_CHECK_* parameters to see what checks are done before arming. Note, if setting this parameter to 0 a reboot is required to arm the plane.  Also note, even with this parameter at 0, if ARMING_CHECK parameter is not also zero the plane may fail to arm throttle at boot due to a pre-arm check failure." user="Advanced">
 <values>
 <value code="0">Disabled</value>
 <value code="1">THR_MIN PWM when disarmed</value>
 <value code="2">0 PWM when disarmed</value>
 </values>
 </param>
-<param humanName="Arm Checks to Peform (bitmask)" name="ARMING_CHECK" documentation="Checks prior to arming motor. This is a bitmask of checks that will be performed befor allowing arming. The default is no checks, allowing arming at any time. You can select whatever checks you prefer by adding together the values of each check type to set this parameter. For example, to only allow arming when you have GPS lock and no RC failsafe you would set ARMING_CHECK to 72. For most users it is recommended that you set this to 1 to enable all checks." user="Standard">
-<field name="Bitmask">0:All,1:Barometer,2:Compass,3:GPS lock,4:INS,5:Parameters,6:RC,7:Board voltage,8:Battery Level,9:Airspeed,10:Logging Available,11:Hardware safety switch,12:GPS Configuration</field>
+<param humanName="Arm Checks to Peform (bitmask)" name="ARMING_CHECK" documentation="Checks prior to arming motor. This is a bitmask of checks that will be performed before allowing arming. The default is no checks, allowing arming at any time. You can select whatever checks you prefer by adding together the values of each check type to set this parameter. For example, to only allow arming when you have GPS lock and no RC failsafe you would set ARMING_CHECK to 72. For most users it is recommended that you set this to 1 to enable all checks." user="Standard">
+<field name="Bitmask">0:All,1:Barometer,2:Compass,3:GPS lock,4:INS,5:Parameters,6:RC Channels,7:Board voltage,8:Battery Level,10:Logging Available,11:Hardware safety switch,12:GPS Configuration</field>
 <values>
 <value code="0">None</value>
 <value code="1">All</value>
@@ -428,10 +433,9 @@
 <value code="8">GPS Lock</value>
 <value code="16">INS(INertial Sensors - accels &amp; gyros)</value>
 <value code="32">Parameters(unused)</value>
-<value code="64">RC Failsafe</value>
+<value code="64">RC Channels</value>
 <value code="128">Board voltage</value>
 <value code="256">Battery Level</value>
-<value code="512">Airspeed</value>
 <value code="1024">LoggingAvailable</value>
 <value code="2048">Hardware safety switch</value>
 <value code="4096">GPS configuration</value>
@@ -441,11 +445,11 @@
 <field name="Range">0.25 3.0</field>
 <field name="Units">m/s/s</field>
 </param>
-<param humanName="Minimum arming voltage on the first battery" name="ARMING_MIN_VOLT" documentation="The minimum voltage on the first battery to arm, 0 disables the check.  This parameter is relevant for ArduPlane only." user="Standard">
+<param humanName="Minimum arming voltage on the first battery" name="ARMING_MIN_VOLT" documentation="The minimum voltage on the first battery to arm, 0 disables the check." user="Standard">
 <field name="Increment">0.1 </field>
 <field name="Units">Volts</field>
 </param>
-<param humanName="Minimum arming voltage on the second battery" name="ARMING_MIN_VOLT2" documentation="The minimum voltage on the first battery to arm, 0 disables the check. This parameter is relevant for ArduPlane only." user="Standard">
+<param humanName="Minimum arming voltage on the second battery" name="ARMING_MIN_VOLT2" documentation="The minimum voltage on the first battery to arm, 0 disables the check." user="Standard">
 <field name="Increment">0.1 </field>
 <field name="Units">Volts</field>
 </param>
@@ -502,23 +506,23 @@
 </values>
 </param>
 <param humanName="Roll axis angle controller P gain" name="ATC_ANG_RLL_P" documentation="Roll axis angle controller P gain.  Converts the error between the desired roll angle and actual angle to a desired roll rate" user="Standard">
-<field name="Range">3.000 12.000</field>
+<field name="Range">0.0 12.000</field>
 </param>
 <param humanName="Pitch axis angle controller P gain" name="ATC_ANG_PIT_P" documentation="Pitch axis angle controller P gain.  Converts the error between the desired pitch angle and actual angle to a desired pitch rate" user="Standard">
-<field name="Range">3.000 12.000</field>
+<field name="Range">0.0 12.000</field>
 </param>
 <param humanName="Yaw axis angle controller P gain" name="ATC_ANG_YAW_P" documentation="Yaw axis angle controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate" user="Standard">
-<field name="Range">3.000 6.000</field>
+<field name="Range">0.0 6.000</field>
 </param>
 <param humanName="Angle Limit (to maintain altitude) Time Constant" name="ATC_ANG_LIM_TC" documentation="Angle Limit (to maintain altitude) Time Constant" user="Advanced">
 <field name="Range">0.5 10.0</field>
 </param>
 <param humanName="Roll axis rate controller P gain" name="ATC_RAT_RLL_P" documentation="Roll axis rate controller P gain.  Converts the difference between desired roll rate and actual roll rate into a motor speed output" user="Standard">
-<field name="Range">0.08 0.30</field>
+<field name="Range">0.0 0.30</field>
 <field name="Increment">0.005</field>
 </param>
 <param humanName="Roll axis rate controller I gain" name="ATC_RAT_RLL_I" documentation="Roll axis rate controller I gain.  Corrects long-term difference in desired roll rate vs actual roll rate" user="Standard">
-<field name="Range">0.01 0.5</field>
+<field name="Range">0.0 0.5</field>
 <field name="Increment">0.01</field>
 </param>
 <param humanName="Roll axis rate controller I gain maximum" name="ATC_RAT_RLL_IMAX" documentation="Roll axis rate controller I gain maximum.  Constrains the maximum motor output that the I gain will output" user="Standard">
@@ -540,11 +544,11 @@
 <field name="Units">Hz</field>
 </param>
 <param humanName="Pitch axis rate controller P gain" name="ATC_RAT_PIT_P" documentation="Pitch axis rate controller P gain.  Converts the difference between desired pitch rate and actual pitch rate into a motor speed output" user="Standard">
-<field name="Range">0.08 0.30</field>
+<field name="Range">0.0 0.30</field>
 <field name="Increment">0.005</field>
 </param>
 <param humanName="Pitch axis rate controller I gain" name="ATC_RAT_PIT_I" documentation="Pitch axis rate controller I gain.  Corrects long-term difference in desired pitch rate vs actual pitch rate" user="Standard">
-<field name="Range">0.01 0.5</field>
+<field name="Range">0.0 0.5</field>
 <field name="Increment">0.01</field>
 </param>
 <param humanName="Pitch axis rate controller I gain maximum" name="ATC_RAT_PIT_IMAX" documentation="Pitch axis rate controller I gain maximum.  Constrains the maximum motor output that the I gain will output" user="Standard">
@@ -566,11 +570,11 @@
 <field name="Units">Hz</field>
 </param>
 <param humanName="Yaw axis rate controller P gain" name="ATC_RAT_YAW_P" documentation="Yaw axis rate controller P gain.  Converts the difference between desired yaw rate and actual yaw rate into a motor speed output" user="Standard">
-<field name="Range">0.10 0.50</field>
+<field name="Range">0.0 0.50</field>
 <field name="Increment">0.005</field>
 </param>
 <param humanName="Yaw axis rate controller I gain" name="ATC_RAT_YAW_I" documentation="Yaw axis rate controller I gain.  Corrects long-term difference in desired yaw rate vs actual yaw rate" user="Standard">
-<field name="Range">0.010 0.05</field>
+<field name="Range">0.0 0.05</field>
 <field name="Increment">0.01</field>
 </param>
 <param humanName="Yaw axis rate controller I gain maximum" name="ATC_RAT_YAW_IMAX" documentation="Yaw axis rate controller I gain maximum.  Constrains the maximum motor output that the I gain will output" user="Standard">
@@ -901,6 +905,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -910,6 +926,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN0_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -973,6 +993,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -982,6 +1014,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -1047,6 +1083,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1056,6 +1104,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN10_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1119,6 +1171,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1128,6 +1192,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -1193,6 +1261,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1202,6 +1282,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN11_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1265,6 +1349,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1274,6 +1370,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -1339,6 +1439,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1348,6 +1460,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN12_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1411,6 +1527,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1420,6 +1548,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -1485,6 +1617,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1494,6 +1638,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN13_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1557,6 +1705,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1566,6 +1726,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -1631,6 +1795,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1640,6 +1816,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN14_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1703,6 +1883,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1712,6 +1904,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -1777,6 +1973,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1786,6 +1994,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN15_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1849,6 +2061,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1858,6 +2082,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -1923,6 +2151,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -1932,6 +2172,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN1_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -1995,6 +2239,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2004,6 +2260,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -2069,6 +2329,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2078,6 +2350,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN2_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2141,6 +2417,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2150,6 +2438,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -2215,6 +2507,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2224,6 +2528,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN3_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2287,6 +2595,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2296,6 +2616,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -2361,6 +2685,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2370,6 +2706,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN4_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2433,6 +2773,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2442,6 +2794,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -2507,6 +2863,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2516,6 +2884,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN5_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2579,6 +2951,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2588,6 +2972,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -2653,6 +3041,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2662,6 +3062,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN6_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2725,6 +3129,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2734,6 +3150,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -2799,6 +3219,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2808,6 +3240,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN7_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -2871,6 +3307,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2880,6 +3328,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -2945,6 +3397,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -2954,6 +3418,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN8_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -3017,6 +3485,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -3026,6 +3506,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
@@ -3091,6 +3575,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -3100,6 +3596,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 <param humanName="Function for button when the shift mode is toggled on" name="BTN9_SFUNCTION" documentation="Set to 0 to disable or choose a function" user="Standard">
@@ -3163,6 +3663,18 @@
 <value code="73">servo_3_min</value>
 <value code="74">servo_3_max</value>
 <value code="75">servo_3_center</value>
+<value code="76">servo_1_min_momentary</value>
+<value code="77">servo_1_max_momentary</value>
+<value code="78">servo_1_min_toggle</value>
+<value code="79">servo_1_max_toggle</value>
+<value code="80">servo_2_min_momentary</value>
+<value code="81">servo_2_max_momentary</value>
+<value code="82">servo_2_min_toggle</value>
+<value code="83">servo_2_max_toggle</value>
+<value code="84">servo_3_min_momentary</value>
+<value code="85">servo_3_max_momentary</value>
+<value code="86">servo_3_min_toggle</value>
+<value code="87">servo_3_max_toggle</value>
 <value code="91">custom_1</value>
 <value code="92">custom_2</value>
 <value code="93">custom_3</value>
@@ -3172,6 +3684,10 @@
 <value code="101">relay_4_on</value>
 <value code="102">relay_4_off</value>
 <value code="103">relay_4_toggle</value>
+<value code="104">relay_1_momentary</value>
+<value code="105">relay_2_momentary</value>
+<value code="106">relay_3_momentary</value>
+<value code="107">relay_4_momentary</value>
 </values>
 </param>
 </parameters>
