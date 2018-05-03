@@ -1,5 +1,25 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev4   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~         3 May 2018          ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes since Rev4:
+
+- Save/load audio volume setting
+- Correct audio volume control ui behavior
+- Set autopilot time on connection
+- Remove options for changing camera mount input channels (they are hard coded)
+- Bugfix crash when popping video display out into a new window
+- Bugfix units settings
+- Update parameter metadata for Sub-3.5.3 - remove some options that don't make sense (ex. airspeed arming check)
+- Default attitude streamrate request from 10Hz to 20Hz
+- Bugfix default parameter file download errors
+- Add motor test page
+- Update video streaming packages (gstreamer 1.5.2 -> 1.14.0)
+- Add BlueROV2 Heavy default parameter configuration
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~  v3.2.4-BlueRobotics-Rev4   ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~       22 January 2018       ~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
