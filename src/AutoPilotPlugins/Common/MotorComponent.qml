@@ -85,12 +85,20 @@ SetupPage {
                                     text:                       index + 1
                                 }
 
+
                                 QGCSlider {
                                     id:                         slider
                                     height:                     ScreenTools.defaultFontPixelHeight * _sliderHeight
                                     orientation:                Qt.Vertical
                                     maximumValue:               100
                                     value:                      neutralValue
+
+                                    // Give slider 'center sprung' behavior
+                                    onPressedChanged: {
+                                        if (!slider.pressed) {
+                                            slider.value = neutralValue
+                                        }
+                                    }
                                 }
                             } // Column
                         } // Repeater
@@ -152,6 +160,13 @@ SetupPage {
                         onValueChanged: {
                             for (var sliderIndex=0; sliderIndex<sliderRepeater.count; sliderIndex++) {
                                 sliderRepeater.itemAt(sliderIndex).motorSlider.value = allSlider.value
+                            }
+                        }
+
+                        // Give slider 'center sprung' behavior
+                        onPressedChanged: {
+                            if (!allSlider.pressed) {
+                                allSlider.value = neutralValue
                             }
                         }
                     }
