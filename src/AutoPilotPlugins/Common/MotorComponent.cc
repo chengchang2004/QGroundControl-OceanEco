@@ -28,6 +28,9 @@ QString MotorComponent::description(void) const
 
 QString MotorComponent::iconResource(void) const
 {
+    if (_vehicle->sub()) {
+        return QStringLiteral("/qmlimages/ThrusterIcon.png");
+    }
     return QStringLiteral("/qmlimages/MotorComponentIcon.svg");
 }
 
