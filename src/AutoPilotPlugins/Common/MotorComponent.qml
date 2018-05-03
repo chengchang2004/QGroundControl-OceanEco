@@ -64,11 +64,13 @@ SetupPage {
 
                             Column {
                                 property alias motorSlider: slider
+                                property alias testTimer: timer
                                 spacing:    ScreenTools.defaultFontPixelWidth
 
                                 Timer {
+                                    id: timer
                                     interval:       250
-                                    running:        true
+                                    running:        false
                                     repeat:         true
 
                                     property real _lastValue: neutralValue // TODO should be called neutralValue, or actually implement last value?
@@ -201,6 +203,12 @@ SetupPage {
                 Switch {
                     id: safetySwitch
                     onClicked: {
+                        if (controller.vehicle.armed) {
+                            for (var sliderIndex=0; sliderIndex<sliderRepeater.count; sliderIndex++) {
+                                sliderRepeater.itemAt(sliderIndex).testTimer.stop()
+                            }
+                        }
+
                         controller.vehicle.armed = checked
                         checked = controller.vehicle.armed // As crazy as this looks, it keeps things working the way they should see onArmedChanged below, that will take care of checked state
                     }
@@ -213,10 +221,17 @@ SetupPage {
                         safetySwitch.checked = armed
                             if (!armed) {
                                 for (var sliderIndex=0; sliderIndex<sliderRepeater.count; sliderIndex++) {
-                                    sliderRepeater.itemAt(sliderIndex).motorSlider.value = neutralValue
+                                    sliderRepeater.itemAt(sliderIndex).testTimer.stop()
                                 }
-                                allSlider.value = neutralValue
+                            } else {
+                                for (var sliderIndex=0; sliderIndex<sliderRepeater.count; sliderIndex++) {
+                                    sliderRepeater.itemAt(sliderIndex).testTimer.start()
+                                }
                             }
+                            for (var sliderIndex=0; sliderIndex<sliderRepeater.count; sliderIndex++) {
+                                sliderRepeater.itemAt(sliderIndex).motorSlider.value = neutralValue
+                            }
+                            allSlider.value = neutralValue
                         }
                 }
 
