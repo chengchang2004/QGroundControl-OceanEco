@@ -101,6 +101,22 @@ SetupPage {
                                             slider.value = neutralValue
                                         }
                                     }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onWheel: {
+                                            // do nothing
+                                            wheel.accepted = true;
+                                        }
+                                        onPressed: {
+                                            // propogate/accept
+                                            mouse.accepted = false;
+                                        }
+                                        onReleased: {
+                                            // propogate/accept
+                                            mouse.accepted = false;
+                                        }
+                                    }
                                 }
                             } // Column
                         } // Repeater
@@ -169,6 +185,22 @@ SetupPage {
                         onPressedChanged: {
                             if (!allSlider.pressed) {
                                 allSlider.value = neutralValue
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onWheel: {
+                                // do nothing
+                                wheel.accepted = true;
+                            }
+                            onPressed: {
+                                // propogate/accept
+                                mouse.accepted = false;
+                            }
+                            onReleased: {
+                                // propogate/accept
+                                mouse.accepted = false;
                             }
                         }
                     }
