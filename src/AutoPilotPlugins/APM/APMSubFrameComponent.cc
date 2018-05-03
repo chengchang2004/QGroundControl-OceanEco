@@ -37,7 +37,7 @@ QString APMSubFrameComponent::description(void) const
 
 QString APMSubFrameComponent::iconResource(void) const
 {
-    return QStringLiteral("/qmlimages/SubFrameComponentIcon.png");
+    return QStringLiteral("/qmlimages/BROV2FrameIcon.svg");
 }
 
 bool APMSubFrameComponent::requiresSetup(void) const
